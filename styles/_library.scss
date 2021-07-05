@@ -1,0 +1,91 @@
+$Base: #000;
+$Level1: #181823;
+$LightGray: #DEECF9;
+$DarkGray: #C7E0F4;
+$Text: #FFF;
+$Primary: #5221E6;
+$GreenAccent: #3CC74E;
+$PinkAccent: #E95D90;
+$PeachAccent: #FFF3E4;
+$VioletAccent: #FBE4FF;
+
+.Font {
+  font-family: Sen, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  color: $Text;
+}
+
+.Label1 {
+  @extend .Font;
+  font-size: 117px;
+  line-height: 120%;
+}
+
+.Heading1 {
+  @extend .Font;
+  font-weight: bold;
+  font-size: 76px;
+  line-height: 91px;
+}
+
+.Heading2 {
+  @extend .Font;
+  font-weight: bold;
+  font-size: 55px;
+  line-height: 66px;
+}
+
+.Heading3 {
+  @extend .Font;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.Heading4 {
+  @extend .Font;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 150%;
+}
+
+.Heading5 {
+  @extend .Font;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 150%;
+}
+
+
+.Body1 {
+  @extend .Font;
+  font-size: 18px;
+  line-height: 150%;
+}
+
+.Body2 {
+  @extend .Font;
+  font-size: 16px;
+  line-height: 150%;
+}
+
+
+.Overline {
+  @extend .Font;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 150%;
+  text-transform: uppercase;
+}
+
+
+.Button {
+  @extend .Font;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 150%;
+  text-transform: uppercase;
+}

@@ -1,0 +1,44 @@
+@import "/styles/library";
+
+.Header {
+  width: 100%;
+  background-color: $Base;
+  height: 88px;
+  display: flex;
+  align-items: center;
+
+  &_Left {
+    @extend .Font;
+    height: 100%;
+    width: 40%;
+    padding-left: 72px;
+    cursor: pointer;
+  }
+
+  &_Right {
+    @extend .Font;
+    height: 100%;
+    width: 60%;
+    margin-left: auto;
+    background-color: $Level1;
+    padding-right: 72px;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+
+    &_Tab {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      padding-left: 12px;
+      padding-right: 12px;
+      justify-content: center;
+      transition: .4s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $Primary;
+      }
+    }
+  }
+}
