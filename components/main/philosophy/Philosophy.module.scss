@@ -1,0 +1,58 @@
+@import "styles/library";
+@import "styles/mixins";
+
+.Philosophy {
+  display: flex;
+  flex-direction: row;
+  margin-top: 64px;
+  @include beMobile() {
+    flex-direction: column;
+  }
+
+  &_Left {
+    width: 50%;
+    background-color: $PeachAccent;
+    display: flex;
+    flex-direction: column;
+    padding: 120px 32px;
+    @include beMobile() {
+      width: 100%;
+      padding: 60px 16px;
+    }
+
+    &_Header {
+      color: $Level1;
+      @extend .Heading2;
+    }
+
+    &_Content {
+      color: $DarkGrey;
+      margin-top: 24px;
+      @extend .Heading5;
+    }
+
+    &_Link {
+      color: $Base;
+      margin-top: auto;
+      cursor: pointer;
+      text-decoration: solid underline $DarkGrey 1px;
+      width: auto;
+      @extend .Heading5;
+      @include beMobile() {
+        margin-top: 32px;
+      }
+    }
+  }
+
+  &_Right {
+    width: 50%;
+    @include beMobile() {
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}

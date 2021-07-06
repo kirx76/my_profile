@@ -1,0 +1,130 @@
+@import "styles/library";
+
+.Skillset {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 32px;
+  margin-top: 64px;
+  @include beMobile() {
+    margin-top: 16px;
+    padding: 0;
+  }
+
+  &_Content {
+    display: flex;
+    flex-direction: row;
+    @include beMobile() {
+      flex-direction: column;
+      padding: 32px;
+    }
+
+    &_Left {
+      display: flex;
+      flex-direction: column;
+      width: 33%;
+      padding-right: 32px;
+      @include beMobile() {
+        width: 100%;
+      }
+
+      &_Title {
+        @extend .Heading2;
+      }
+
+      &_Description {
+        margin-top: 24px;
+        color: $LightGrey;
+        @extend .Body1;
+      }
+    }
+
+    &_Right {
+      width: 67%;
+      display: flex;
+      flex-wrap: wrap;
+      @include beMobile() {
+        width: 100%;
+      }
+
+      &_Item {
+        flex: 46%;
+        margin-bottom: 24px;
+        margin-right: 24px;
+        @include beMobile() {
+          flex: 100%;
+        }
+
+        &_Title {
+          margin-top: 24px;
+          @extend .Heading3;
+        }
+
+        &_Description {
+          margin-top: 12px;
+          width: 70%;
+          color: $LightGrey;
+          @extend .Body2;
+          @include beMobile() {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+  }
+
+  &_Footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    margin-top: 32px;
+    @include beMobile() {
+      overflow-x: initial;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 3px;
+      height: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(40deg, #FF8A8A 20%, #F771D1 40%, #A18AFF 60%, #4CD2FF 80%, #6AFC82 100%);
+      border-radius: 0px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(40deg, #FF5757 20%, #FF61D0 40%, #9278FA 60%, #24C5FF 80%, #43F761 100%);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #FFFFFF;
+      border-radius: 0px;
+      box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+    }
+
+
+    &_Item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 55px 135px;
+      border: 1px solid $Level1;
+      cursor: pointer;
+      transition: .4s;
+      text-transform: uppercase;
+      @extend .Font;
+      @include beMobile() {
+        flex: 1 50%;
+        padding: 48px 32px;
+      }
+
+      &:hover {
+        background-color: $Primary;
+      }
+    }
+  }
+}

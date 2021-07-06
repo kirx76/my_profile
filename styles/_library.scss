@@ -1,3 +1,5 @@
+@import "mixins";
+
 $Base: #000;
 $Level1: #181823;
 $LightGray: #DEECF9;
@@ -8,6 +10,9 @@ $GreenAccent: #3CC74E;
 $PinkAccent: #E95D90;
 $PeachAccent: #FFF3E4;
 $VioletAccent: #FBE4FF;
+$Serulian: #9BB7D4;
+$DarkGrey: #5B6876;
+$LightGrey: #8491A0;
 
 .Font {
   font-family: Sen, sans-serif;
@@ -29,6 +34,10 @@ $VioletAccent: #FBE4FF;
   font-weight: bold;
   font-size: 76px;
   line-height: 91px;
+  @include beMobile(){
+    font-size: 32px;
+    line-height: 38px;
+  }
 }
 
 .Heading2 {
@@ -36,6 +45,10 @@ $VioletAccent: #FBE4FF;
   font-weight: bold;
   font-size: 55px;
   line-height: 66px;
+  @include beMobile(){
+    font-size: 32px;
+    line-height: 38px;
+  }
 }
 
 .Heading3 {
@@ -50,6 +63,9 @@ $VioletAccent: #FBE4FF;
   font-weight: bold;
   font-size: 18px;
   line-height: 150%;
+  @include beMobile(){
+    font-size: 18px;
+  }
 }
 
 .Heading5 {

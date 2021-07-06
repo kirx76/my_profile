@@ -1,0 +1,67 @@
+@import "styles/library";
+
+.Experience {
+  margin-top: 64px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  @include beMobile() {
+    margin-top: 32px;
+  }
+
+  &_Header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+
+    &_Title {
+      color: $LightGrey;
+      margin-bottom: 8px;
+      @extend .Heading5;
+    }
+
+    &_Content {
+      width: 60%;
+      @extend .Heading2;
+      @include beMobile() {
+        width: 100%;
+      }
+    }
+  }
+
+  &_Body {
+    display: flex;
+    flex-direction: row;
+    @include beMobile() {
+      flex-direction: column;
+    }
+
+    &_Item {
+      @include beMobile() {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 40px;
+      }
+
+      &_Number {
+        color: $LightGrey;
+        @extend .Label1;
+      }
+
+      &_Company {
+        @extend .Heading3;
+        @include beMobile() {
+          display: block;
+        }
+      }
+
+      &_Description {
+        margin-top: 16px;
+        @extend .Body2;
+        @include beMobile() {
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+}

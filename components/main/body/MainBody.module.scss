@@ -1,23 +1,13 @@
-@import "/styles/library";
+@import "styles/library";
+@import "styles/mixins";
 
 .MainBody {
   background-color: $Base;
   display: flex;
+  flex-direction: column;
   width: 100%;
-
-  &_Left {
-    @extend .Font;
-    padding-top: 40px;
-    padding-left: 40px;
-    background-color: $Base;
-    width: 40%;
-  }
-
-  &_Right {
-    @extend .Font;
-    padding-top: 40px;
-    padding-right: 40px;
-    background-color: $Level1;
-    width: 60%;
+  padding: 40px;
+  @include beMobile() {
+    padding: 0;
   }
 }

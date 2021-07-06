@@ -1,0 +1,70 @@
+@import "styles/library";
+
+.Footer {
+  margin-top: auto;
+  background-color: $Level1;
+  display: flex;
+  flex-direction: row;
+  padding: 72px 72px;
+  @include beMobile() {
+    flex-direction: column;
+    padding: 32px;
+  }
+
+  &_Left {
+    width: 50%;
+    @include beMobile() {
+      width: 100%;
+    }
+
+    &_Top {
+      @extend .Heading2;
+    }
+
+    &_Middle {
+      margin-top: 32px;
+      @include beMobile() {
+        margin-bottom: 32px;
+      }
+    }
+
+    &_Bottom {
+      margin-top: auto;
+      color: $LightGrey;
+      @extend .Body2;
+      @include beMobile() {
+        display: none;
+      }
+    }
+  }
+
+  &_Right {
+    width: 50%;
+    flex-wrap: wrap;
+    display: flex;
+    @include beMobile() {
+      width: 100%;
+    }
+
+    &_Item {
+      flex: 1 1 50%;
+      padding: 0 24px 24px 2px;
+      cursor: pointer;
+      @extend .Body2;
+      @include beMobile() {
+        padding: 20px 0;
+      }
+    }
+  }
+
+  &_Copyright {
+    display: none;
+    margin-top: auto;
+    color: $LightGrey;
+    @extend .Body2;
+    @include beMobile() {
+      display: flex;
+      margin-top: 32px;
+    }
+  }
+}
