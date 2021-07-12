@@ -1,0 +1,112 @@
+@import "styles/library";
+@import "styles/mixins";
+
+.Posts {
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 2000px;
+  margin-top: 64px;
+  @include beMobile() {
+    height: auto;
+    padding: 20px;
+    margin-top: 32px;
+  }
+
+  &_Header {
+    flex: 2 1 5%;
+    width: 50%;
+    @include beMobile() {
+      width: 100%;
+      flex: 1 1 100%;
+    }
+
+    &_Title {
+      @extend .Heading5;
+    }
+
+    &_Description {
+      flex-wrap: wrap;
+      white-space: normal;
+      width: 100%;
+      @extend .Heading2;
+    }
+  }
+
+  &_Item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    width: 50%;
+    flex: 2 1 40%;
+    @include beMobile() {
+      width: 100%;
+      flex: 1 1 100%;
+      padding: 0;
+      margin-top: 24px;
+    }
+
+    &_Container {
+      cursor: pointer;
+      transition: .4s;
+      position: relative;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &_Image {
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      &_Text {
+        margin-top: -4px;
+        padding: 40px 32px;
+        background-color: $Level1;
+
+        &_Title {
+          @extend .Heading3;
+        }
+
+        &_Description {
+          margin-top: 18px;
+          color: $LightGrey;
+          @extend .Body1;
+        }
+      }
+    }
+  }
+
+  &_Button {
+    flex: 2 1 5%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    @include beMobile() {
+      width: 100%;
+      flex: 1 1 100%;
+      margin-top: 36px;
+    }
+
+    span {
+      border: 1px solid $Purple;
+      padding: 24px 32px;
+      cursor: pointer;
+      transition: .4s;
+      @extend .Heading4;
+      @include beMobile() {
+        width: 100%;
+        justify-content: center;
+      }
+
+      &:hover {
+        background-color: $Primary;
+      }
+    }
+  }
+}

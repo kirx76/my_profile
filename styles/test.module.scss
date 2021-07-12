@@ -1,0 +1,56 @@
+.wrapper {
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 1000px;
+  max-height: 1000px;
+}
+
+.box_red {
+  background-color: red;
+}
+
+.box_green {
+  background-color: green;
+}
+
+.box_yellow {
+  background-color: yellow;
+}
+
+.box_blue {
+  background-color: blue;
+}
+
+.box_blue, .box_green, .box_red, .box_yellow {
+  flex: 2 1 40%;
+  width: 700px;
+  padding: 12px;
+}
+
+.header {
+  flex: 2 1 5%;
+
+  span {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}
+
+.button {
+  flex: 2 1 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    padding: 20px 32px;
+    border: 1px solid purple;
+    font-size: 18px;
+  }
+}

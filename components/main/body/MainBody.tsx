@@ -4,6 +4,7 @@ import Introduce from "../introduce";
 import Experience from "../experience";
 import Philosophy from "../philosophy";
 import Skillset from "../skillset";
+import Posts from "../posts";
 
 export default class MainBody extends Component<any, any> {
   render() {
@@ -13,6 +14,7 @@ export default class MainBody extends Component<any, any> {
         <Experience/>
         <Philosophy/>
         <Skillset/>
+        <Posts/>
       </div>
     )
   }
