@@ -1,9 +1,9 @@
 import React from "react";
 import App from "next/app";
+import Cookies from "cookies";
+import { Provider } from "mobx-react";
 
-import {Provider} from "mobx-react";
-
-import '../styles/globals.css'
+import "../styles/globals.css";
 import RootStore from "../stores/RootStore";
 import initRootStore from "../stores";
 import Header from "../components/header";
@@ -15,44 +15,55 @@ class MyApp extends App {
 
   constructor(props) {
     super(props);
-    const isServer = typeof window === 'undefined';
-    this.rootStore = isServer ? props.initialState : initRootStore(props.initialState);
+    const isServer = typeof window === "undefined";
+    this.rootStore = isServer
+      ? props.initialState
+      : initRootStore(props.initialState);
   }
 
   static getInitialProps = async (appContext) => {
     let pageProps = {};
     if (appContext.Component.getInitialProps) {
       try {
-        pageProps = appContext.Component.getInitialProps(appContext.ctx)
+        pageProps = appContext.Component.getInitialProps(appContext.ctx);
       } catch (e) {
-        console.log(e)
+        console.log(e, "getInitialProps");
       }
     }
 
     const rootStore = initRootStore({} as RootStore);
     appContext.ctx.rootStore = rootStore;
 
-    // await rootStore.authStore.fetchCurrentUser();
+    if (appContext.ctx.req) {
+      const cookies = new Cookies(appContext.ctx.req, appContext.ctx.res);
+      const token = cookies.get("Authorization");
+
+      rootStore.tokenStore.set(token, true);
+    }
+
+    await rootStore.authStore.fetchCurrentUser();
 
     return {
       initialState: rootStore,
       pageProps: pageProps,
-    }
-  }
+    };
+  };
 
   render() {
-    const {Component, pageProps, err, noindex} = this.props;
+    const { Component, pageProps, err, noindex } = this.props;
 
     return (
       <Provider {...this.rootStore}>
-        <div style={{width: '100%', display: "flex", flexDirection: 'column'}}>
-          <Header/>
+        <div
+          style={{ width: "100%", display: "flex", flexDirection: "column" }}
+        >
+          <Header />
           <Component {...pageProps} />
-          <Footer/>
+          <Footer />
         </div>
       </Provider>
-    )
+    );
   }
 }
 
-export default MyApp
+export default MyApp;

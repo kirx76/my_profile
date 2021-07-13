@@ -1,14 +1,17 @@
-import React, {Component} from "react";
-import styles from './Header.module.scss'
-import {inject, observer} from "mobx-react";
+import React, { Component } from "react";
+import styles from "./Header.module.scss";
+import { inject, observer } from "mobx-react";
 import RootStore from "../../stores/RootStore";
 import MenuStore from "../../stores/MenuStore";
+import AuthStore from "../../stores/AuthStore";
 
-@inject('menuStore')
+@inject("menuStore")
+@inject("authStore")
 @observer
 export default class Header extends Component<RootStore, any> {
   render() {
-    const {isMenuOpen, toggleMenu} = this.props.menuStore;
+    const { menuStore, authStore } = this.props;
+    const { isMenuOpen, toggleMenu } = menuStore;
     return (
       <>
         <div className={styles.Header}>
@@ -16,50 +19,85 @@ export default class Header extends Component<RootStore, any> {
             <span>Kirx</span>
           </div>
           <div className={styles.Header_Right}>
-            {Tabs.map(tab => <HeaderTab tab={tab} key={tab.name}/>)}
+            {Tabs.map((tab) => (
+              <HeaderTab tab={tab} key={tab.name} />
+            ))}
+            {authStore.user && (
+              <HeaderTab tab={{ name: authStore.user.userName }} />
+            )}
           </div>
-          <div
-            className={styles.Header_Mobile_Right}
-            onClick={toggleMenu}>
-          <span
-            className={isMenuOpen ? styles.Header_Mobile_Right_Active : styles.Header_Mobile_Right_Inactive}>X</span>
+          <div className={styles.Header_Mobile_Right} onClick={toggleMenu}>
+            <span
+              className={
+                isMenuOpen
+                  ? styles.Header_Mobile_Right_Active
+                  : styles.Header_Mobile_Right_Inactive
+              }
+            >
+              X
+            </span>
           </div>
         </div>
-        <MobileMenu/>
+        <MobileMenu />
       </>
-    )
+    );
   }
 }
 
-
-const HeaderTab = ({tab}) => {
+const HeaderTab = ({ tab }) => {
   return (
     <div className={styles.Header_Right_Tab}>
       <span>{tab.name}</span>
     </div>
-  )
-}
+  );
+};
 
-export const MobileMenu = inject('menuStore')(observer((props: { menuStore?: MenuStore }) => {
-  return (
-    <div
-      className={props.menuStore.isMenuOpen ? styles.Mobile_Menu : styles.Mobile_Menu_Inactive}
-      onClick={props.menuStore.toggleMenu}
-    >
-      <div className={styles.Mobile_Menu_Container}>
-        <div className={styles.Mobile_Menu_Container_Content}
-             onClick={e => e.stopPropagation()}>
-          {Tabs.map(tab => <span key={tab.name}>{tab.name}</span>)}
+export const MobileMenu = inject(
+  "menuStore",
+  "authStore"
+)(
+  observer((props: { menuStore?: MenuStore; authStore?: AuthStore }) => {
+    console.log(props.authStore.user);
+    return (
+      <div
+        className={
+          props.menuStore.isMenuOpen
+            ? styles.Mobile_Menu
+            : styles.Mobile_Menu_Inactive
+        }
+        onClick={props.menuStore.toggleMenu}
+      >
+        <div className={styles.Mobile_Menu_Container}>
+          <div
+            className={styles.Mobile_Menu_Container_Content}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {Tabs.map((tab) => (
+              <span key={tab.name}>{tab.name}</span>
+            ))}
+            {props.authStore.user && (
+              <span style={{ textTransform: "uppercase" }}>
+                {props.authStore.user.userName}
+              </span>
+            )}
+            {props.authStore.user && (
+              <span
+                onClick={props.authStore.exit}
+                style={{ textTransform: "uppercase", color: "red" }}
+              >
+                EXIT
+              </span>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  )
-}))
-
+    );
+  })
+);
 
 const Tabs = [
-  {name: 'Experience'},
-  {name: 'Work'},
-  {name: 'Photography'},
-  {name: 'Contact'}
-]
+  { name: "Experience" },
+  { name: "Work" },
+  { name: "Photography" },
+  { name: "Contact" },
+];

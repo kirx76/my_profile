@@ -1,17 +1,18 @@
 import RootStore from "./RootStore";
-import {enableStaticRendering} from "mobx-react";
+import { enableStaticRendering } from "mobx-react";
 
-const isServer = typeof window === 'undefined';
+const isServer = typeof window === "undefined";
 enableStaticRendering(isServer);
 
 let store = null;
 
 export default function initRootStore(initialData: RootStore) {
+  const rootStore = new RootStore(initialData);
   if (isServer) {
-    return new RootStore(initialData)
+    return rootStore;
   }
   if (store === null) {
-    store = new RootStore(initialData)
+    store = rootStore;
   }
 
   return store;
