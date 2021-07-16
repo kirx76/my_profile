@@ -2,16 +2,23 @@ import { AxiosInstance, AxiosResponse } from "axios";
 import TokenStore from "./TokenStore";
 import { action, computed, makeObservable, observable, toJS } from "mobx";
 
+type TUser = {
+  id?: number;
+  name?: string;
+  secondName?: string;
+  userName?: string;
+};
+
 export default class AuthStore {
   _client: AxiosInstance;
   tokenStore: TokenStore;
 
-  @observable _user = null;
+  @observable _user: TUser = null;
 
   constructor(client: AxiosInstance, initialData, tokenStore) {
     makeObservable(this);
     this._client = client;
-    this._user = initialData?.user;
+    this._user = initialData?._user;
     this.tokenStore = tokenStore;
   }
 
@@ -30,6 +37,7 @@ export default class AuthStore {
     return this.client
       .post("/user/login", JSON.stringify({ userName, password }))
       .then((response) => {
+        console.log(response, ["respon"]);
         this.handleAuth(response);
         return this.getUser().then((userData) => {
           this.setUser(userData);
@@ -41,6 +49,9 @@ export default class AuthStore {
   @action exit = (): void => {
     this.setUser(null);
     this.tokenStore.remove();
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   };
 
   @action handleAuth = (response: AxiosResponse) =>

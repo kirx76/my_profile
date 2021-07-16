@@ -1,0 +1,7 @@
+@import "styles/library";
+@import "styles/mixins";
+
+.Me {
+  display: flex;
+  flex-direction: column;
+}

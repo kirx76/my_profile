@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styles from "./Header.module.scss";
 import { inject, observer } from "mobx-react";
+import Link from "next/link";
+
 import RootStore from "../../stores/RootStore";
 import MenuStore from "../../stores/MenuStore";
 import AuthStore from "../../stores/AuthStore";
@@ -22,9 +24,6 @@ export default class Header extends Component<RootStore, any> {
             {Tabs.map((tab) => (
               <HeaderTab tab={tab} key={tab.name} />
             ))}
-            {authStore.user && (
-              <HeaderTab tab={{ name: authStore.user.userName }} />
-            )}
           </div>
           <div className={styles.Header_Mobile_Right} onClick={toggleMenu}>
             <span
@@ -44,50 +43,87 @@ export default class Header extends Component<RootStore, any> {
   }
 }
 
-const HeaderTab = ({ tab }) => {
-  return (
-    <div className={styles.Header_Right_Tab}>
-      <span>{tab.name}</span>
-    </div>
-  );
+type THeaderTab = {
+  name: string;
+  color?: string;
+  callback?: string;
+  link?: string;
+  replaceable?: boolean;
 };
+
+const HeaderTab = inject("authStore")(
+  observer(
+    ({
+      tab,
+      mobile,
+      authStore,
+    }: {
+      tab: THeaderTab;
+      mobile?: boolean;
+      authStore?: AuthStore;
+    }) => {
+      if (mobile) {
+        if (tab.link) {
+          if (tab.replaceable && authStore.user) {
+            return <Link href={"/me"}>{authStore.user.userName}</Link>;
+          }
+          return <Link href={tab.link}>{tab.name}</Link>;
+        } else {
+          return (
+            <span
+              style={
+                tab.color && { color: tab.color, textTransform: "uppercase" }
+              }
+              onClick={tab.callback ? authStore[tab.callback] : null}
+            >
+              {tab.name}
+            </span>
+          );
+        }
+      }
+      return (
+        <div className={styles.Header_Right_Tab}>
+          {tab.link ? (
+            tab.replaceable && authStore.user ? (
+              <Link href={"/me"}>{authStore.user.userName}</Link>
+            ) : (
+              <Link href={tab.link}>{tab.name}</Link>
+            )
+          ) : (
+            <span
+              style={
+                tab.color && { color: tab.color, textTransform: "uppercase" }
+              }
+              onClick={tab.callback ? authStore[tab.callback] : null}
+            >
+              {tab.name}
+            </span>
+          )}
+        </div>
+      );
+    }
+  )
+);
 
 export const MobileMenu = inject(
   "menuStore",
   "authStore"
 )(
-  observer((props: { menuStore?: MenuStore; authStore?: AuthStore }) => {
-    console.log(props.authStore.user);
+  observer(({ menuStore }: { menuStore?: MenuStore }) => {
     return (
       <div
         className={
-          props.menuStore.isMenuOpen
+          menuStore.isMenuOpen
             ? styles.Mobile_Menu
             : styles.Mobile_Menu_Inactive
         }
-        onClick={props.menuStore.toggleMenu}
+        onClick={menuStore.toggleMenu}
       >
         <div className={styles.Mobile_Menu_Container}>
-          <div
-            className={styles.Mobile_Menu_Container_Content}
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className={styles.Mobile_Menu_Container_Content}>
             {Tabs.map((tab) => (
-              <span key={tab.name}>{tab.name}</span>
+              <HeaderTab key={tab.name} tab={tab} mobile />
             ))}
-            {props.authStore.user && (
-              <span style={{ textTransform: "uppercase" }}>
-                {props.authStore.user.userName}
-              </span>
-            )}
-            {props.authStore.user && (
-              <span
-                onClick={props.authStore.exit}
-                style={{ textTransform: "uppercase", color: "red" }}
-              >
-                EXIT
-              </span>
-            )}
           </div>
         </div>
       </div>
@@ -96,8 +132,10 @@ export const MobileMenu = inject(
 );
 
 const Tabs = [
-  { name: "Experience" },
+  { name: "Main", link: "/" },
   { name: "Work" },
   { name: "Photography" },
   { name: "Contact" },
+  { name: "Login", link: "/login", replaceable: true },
+  { name: "Exit", callback: "exit", color: "#5221E6" },
 ];

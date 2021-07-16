@@ -1,0 +1,39 @@
+@import "styles/library";
+@import "styles/mixins";
+
+.Login {
+  background-color: $Base;
+
+  &_Form {
+    padding: 48px 20px;
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 4px;
+      @extend .Body2;
+    }
+
+    input {
+      background-color: $Level1;
+      border: none;
+      height: 50px;
+      outline: none;
+      padding-left: 8px;
+      margin-bottom: 16px;
+      @extend .Font;
+      @include beMobile() {
+        height: 40px;
+      }
+    }
+
+    button {
+      margin-top: 16px;
+      background-color: $Primary;
+      border: none;
+      padding: 24px;
+      justify-content: center;
+      @extend .Heading4;
+    }
+  }
+}

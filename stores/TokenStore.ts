@@ -9,6 +9,10 @@ export default class TokenStore {
     makeAutoObservable(this);
     this._token = new Cookie("Authorization");
     this.server_token = initialData?.server_token || null;
+    console.log(initialData, "initialData");
+    // if (!initialData?.server_token) {
+    //   this._token.remove();
+    // }
   }
 
   @action get() {

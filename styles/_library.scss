@@ -13,7 +13,6 @@ $VioletAccent: #FBE4FF;
 $Serulian: #9BB7D4;
 $DarkGrey: #5B6876;
 $LightGrey: #8491A0;
-$Purple: #5221E6;
 
 .Font {
   font-family: Sen, sans-serif;
@@ -35,7 +34,7 @@ $Purple: #5221E6;
   font-weight: bold;
   font-size: 76px;
   line-height: 91px;
-  @include beMobile(){
+  @include beMobile() {
     font-size: 32px;
     line-height: 38px;
   }
@@ -46,7 +45,7 @@ $Purple: #5221E6;
   font-weight: bold;
   font-size: 55px;
   line-height: 66px;
-  @include beMobile(){
+  @include beMobile() {
     font-size: 32px;
     line-height: 38px;
   }
@@ -64,7 +63,7 @@ $Purple: #5221E6;
   font-weight: bold;
   font-size: 18px;
   line-height: 150%;
-  @include beMobile(){
+  @include beMobile() {
     font-size: 18px;
   }
 }
