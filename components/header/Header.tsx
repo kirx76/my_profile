@@ -138,4 +138,5 @@ const Tabs = [
   { name: "Contact" },
   { name: "Login", link: "/login", replaceable: true },
   { name: "Exit", callback: "exit", color: "#5221E6" },
+  { name: "Travel", link: "/travel" },
 ];

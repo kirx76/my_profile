@@ -1,0 +1,50 @@
+@import "styles/library";
+@import "styles/mixins";
+
+.AddPlaceMark {
+  background-color: $Base;
+  padding: 20px 72px 60px 72px;
+  position: relative;
+
+  h3 {
+    @extend .Heading3;
+  }
+
+  &_Form {
+    display: flex;
+    flex-direction: column;
+    color: $Text;
+
+    &_Input {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+      padding: 4px 0;
+
+      label {
+        margin-bottom: 4px;
+      }
+
+      input, textarea {
+        padding: 8px;
+        outline: none;
+        color: $Base;
+        @extend .Font;
+      }
+    }
+
+    &_Button {
+      padding: 16px;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      transition: .4s;
+      margin-top: 16px;
+
+      &:hover {
+        background-color: $Primary;
+        color: $Text;
+      }
+    }
+  }
+}

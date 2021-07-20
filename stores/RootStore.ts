@@ -3,6 +3,7 @@ import TokenStore from "./TokenStore";
 import initAxios from "../utils/axios";
 import AuthStore from "./AuthStore";
 import NotificationStore from "./NotificationStore";
+import TravelStore from "stores/TravelStore";
 
 class RootStore {
   menuStore?: MenuStore;
@@ -10,6 +11,7 @@ class RootStore {
   $axios?: any;
   authStore?: AuthStore;
   notificationStore?: NotificationStore;
+  travelStore?: TravelStore;
 
   constructor(initialData = null) {
     console.log(initialData, ["initialData"]);
@@ -22,6 +24,7 @@ class RootStore {
       this.tokenStore
     );
     this.notificationStore = new NotificationStore();
+    this.travelStore = new TravelStore(this.$axios);
   }
 }
 
