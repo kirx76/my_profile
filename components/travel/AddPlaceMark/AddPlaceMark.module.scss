@@ -3,8 +3,11 @@
 
 .AddPlaceMark {
   background-color: $Base;
-  padding: 20px 72px 60px 72px;
+  padding: 24px 72px 60px 72px;
   position: relative;
+  @include beMobile(){
+    padding: 8px;
+  }
 
   h3 {
     @extend .Heading3;

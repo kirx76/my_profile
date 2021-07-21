@@ -2,7 +2,22 @@ import React, { Component, createRef } from "react";
 import styles from "./AddPlaceMark.module.scss";
 import RootStore from "stores/RootStore";
 import { inject, observer } from "mobx-react";
-import { Clusterer, Map, Placemark, YMaps } from "react-yandex-maps";
+import {
+  Clusterer,
+  GeolocationControl,
+  ListBox,
+  ListBoxItem,
+  Map,
+  Placemark,
+  RouteButton,
+  RouteEditor,
+  RoutePanel,
+  SearchControl,
+  TrafficControl,
+  TypeSelector,
+  YMaps,
+  ZoomControl,
+} from "react-yandex-maps";
 import { TPlaceMark } from "stores/TravelStore";
 
 @inject("notificationStore")
@@ -91,7 +106,11 @@ class AddPlaceMark extends Component<RootStore, any> {
           style={{ width: "100%" }}
           ref={this.formRef}
         >
-          <YMaps>
+          <YMaps
+            query={{
+              apikey: "b2853f43-c2a2-437b-a1b7-9671d2fdd5ca",
+            }}
+          >
             <Map
               width={"100%"}
               height={"500px"}
@@ -101,8 +120,32 @@ class AddPlaceMark extends Component<RootStore, any> {
                 zoom: 10,
                 controls: ["zoomControl", "fullscreenControl"],
               }}
-              modules={["control.ZoomControl", "control.FullscreenControl"]}
+              modules={[
+                "control.ZoomControl",
+                "control.FullscreenControl",
+                "control.SearchControl",
+                "control.ListBox",
+                "control.ListBoxItem",
+                "control.Manager",
+                "control.RouteButton",
+                "control.RouteEditor",
+                "control.RoutePanel",
+                "control.RulerControl",
+                "control.SearchControl",
+                "control.storage",
+                "control.TrafficControl",
+                "control.TypeSelector",
+                "control.ZoomControl",
+              ]}
             >
+              <RouteButton />
+              <RouteEditor />
+              <TrafficControl />
+              <TypeSelector />
+              <ZoomControl options={{ float: "right" }} />
+              <GeolocationControl options={{ float: "left" }} />
+              <SearchControl />
+
               {this.state.placeMark && (
                 <Placemark
                   onDragEnd={this.dragMark}
