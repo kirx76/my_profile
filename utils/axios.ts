@@ -2,7 +2,7 @@ import axios from "axios";
 
 const initAxios = (tokenStore) => {
   const $axios = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "http://151.248.112.37:5000/",
     withCredentials: true,
   });
   $axios.defaults.headers.post["Content-Type"] = "application/json";
