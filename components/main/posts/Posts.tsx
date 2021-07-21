@@ -31,7 +31,6 @@ const Post = ({ item }) => {
     <div className={styles.Posts_Item}>
       <div className={styles.Posts_Item_Container}>
         <div className={styles.Posts_Item_Container_Image}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={item.img.src} alt="post" />
         </div>
         <div className={styles.Posts_Item_Container_Text}>

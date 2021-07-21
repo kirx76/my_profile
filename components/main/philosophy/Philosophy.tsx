@@ -23,7 +23,6 @@ export default class Philosophy extends Component<any, any> {
           </div>
         </div>
         <div className={styles.Philosophy_Right}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={img.src} alt="Philosophy" />
         </div>
       </div>

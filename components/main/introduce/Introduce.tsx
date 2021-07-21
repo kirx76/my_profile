@@ -6,7 +6,6 @@ export default class Introduce extends Component<any, any> {
     return (
       <div className={styles.Introduce}>
         <div className={styles.Introduce_Image}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://sun9-22.userapi.com/impf/c830109/v830109662/d6b1b/B86haq6vdz0.jpg?size=2560x1702&quality=96&sign=5e52ec059e6edbf4e6e5902d0676ebc5&type=album"
             alt="my photo"
