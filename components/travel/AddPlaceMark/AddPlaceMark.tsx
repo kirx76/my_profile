@@ -3,15 +3,13 @@ import styles from "./AddPlaceMark.module.scss";
 import RootStore from "stores/RootStore";
 import { inject, observer } from "mobx-react";
 import {
+  Button,
   Clusterer,
   GeolocationControl,
-  ListBox,
-  ListBoxItem,
   Map,
   Placemark,
   RouteButton,
   RouteEditor,
-  RoutePanel,
   SearchControl,
   TrafficControl,
   TypeSelector,
@@ -61,6 +59,7 @@ class AddPlaceMark extends Component<RootStore, any> {
         lat: e.get("coords")[0],
         long: e.get("coords")[1],
       },
+      selectedMark: null,
     });
   };
 
@@ -71,6 +70,7 @@ class AddPlaceMark extends Component<RootStore, any> {
         lat: e.get("target").geometry.getCoordinates()[0],
         long: e.get("target").geometry.getCoordinates()[1],
       },
+      selectedMark: null,
     });
   };
 
@@ -79,7 +79,6 @@ class AddPlaceMark extends Component<RootStore, any> {
       ...this.state,
       selectedMark: placeMark,
     });
-    console.log(this.state);
   };
 
   deleteMark = () => {
@@ -140,6 +139,18 @@ class AddPlaceMark extends Component<RootStore, any> {
             >
               <RouteButton />
               <RouteEditor />
+              {this.state.selectedMark && (
+                <Button
+                  onClick={this.deleteMark}
+                  data={{
+                    content: "Убрать",
+                    title: "Удалить выбранную точку",
+                  }}
+                  options={{
+                    selectOnClick: false,
+                  }}
+                />
+              )}
               <TrafficControl />
               <TypeSelector />
               <ZoomControl options={{ float: "right" }} />
@@ -216,12 +227,6 @@ class AddPlaceMark extends Component<RootStore, any> {
             Добавить точку
           </button>
         </form>
-        {this.state.selectedMark && (
-          <div style={{ position: "absolute", top: 0 }}>
-            <span>Хотите удалить точку?</span>
-            <button onClick={this.deleteMark}>Удалить</button>
-          </div>
-        )}
       </div>
     );
   }
