@@ -1,3 +1,4 @@
+export {};
 const fs = require("fs"); // модуль для работы с файловой системой
 const path = require("path"); // модуль для преобразования пути
 const minimist = require("minimist"); // модуль для преобразования строки аргументов в объект
