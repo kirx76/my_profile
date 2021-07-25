@@ -1,0 +1,120 @@
+@import "styles/library";
+@import "styles/mixins";
+
+.Todo {
+  padding: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &_Tabs {
+    height: 32px;
+    background-color: $Base;
+    display: flex;
+
+    &_Tab {
+      background-color: red;
+      cursor: pointer;
+      overflow: hidden;
+      margin-right: 2px;
+      border-radius: 6px 6px 0 0;
+      padding: 4px 8px;
+    }
+
+    &_Plus {
+      background-color: $GreenAccent;
+      font-size: 24px;
+      padding: 0 8px;
+      cursor: pointer;
+      overflow: hidden;
+      margin-right: 2px;
+      border-radius: 6px 6px 0 0;
+    }
+  }
+
+  &_Container {
+    background-color: $Text;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &_Form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: 2px solid $Base;
+      padding-bottom: 8px;
+
+      &_Input {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 4px;
+        padding: 4px;
+        width: 100%;
+
+        label {
+          margin-bottom: 4px;
+        }
+
+        input {
+          padding: 8px;
+          outline: none;
+        }
+      }
+
+      button {
+        outline: none;
+        padding: 8px;
+        background-color: $Primary;
+        border: none;
+        border-radius: 16px;
+        width: 50%;
+        color: $Text;
+        cursor: pointer;
+      }
+    }
+
+    &_Task {
+      padding: 8px;
+
+      &_Item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid $Primary;
+        border-radius: 8px;
+        padding: 8px;
+        cursor: pointer;
+        width: 100%;
+
+        &_Name {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+
+          &_Close {
+            cursor: pointer;
+            padding: 8px;
+            background-color: $PinkAccent;
+            border-radius: 4px;
+            color: $Text;
+            transition: .4s;
+            margin-left: auto;
+
+            &:hover {
+              background-color: $Primary;
+            }
+          }
+        }
+
+        &_Content {
+          margin-top: 8px;
+          display: flex;
+          align-items: center;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

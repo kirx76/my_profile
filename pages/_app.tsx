@@ -3,6 +3,7 @@ import App from "next/app";
 import Cookies from "cookies";
 import { Provider } from "mobx-react";
 import { NotificationContainer } from "react-notifications";
+import { resetServerContext } from "react-beautiful-dnd";
 
 import "react-notifications/lib/notifications.css";
 import "../styles/globals.css";
@@ -26,6 +27,7 @@ class MyApp extends App {
   }
 
   static getInitialProps = async (appContext) => {
+    resetServerContext();
     let pageProps = {};
     if (appContext.Component.getInitialProps) {
       try {
