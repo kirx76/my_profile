@@ -50,6 +50,44 @@ class Todo extends Component<RootStore, any> {
     this.props.todoStore.addTaskToCurrentDay(newTask);
   };
 
+  submitFormDay = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const newDay = {
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      tasks: [
+        {
+          name: formData.get("name") as string,
+          order: null,
+          content: formData.get("description") as string,
+        },
+      ],
+    };
+    this.props.todoStore.addNewDay(newDay);
+    // this.props.todoStore.addTaskToCurrentDay(newDay);
+  };
+
+  editFormDay = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const newDay = {
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      tasks: [
+        {
+          name: formData.get("name") as string,
+          order: null,
+          content: formData.get("description") as string,
+        },
+      ],
+    };
+    this.props.todoStore.updateCurrentDay(newDay);
+    // this.props.todoStore.addTaskToCurrentDay(newDay);
+  };
+
   handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -63,66 +101,130 @@ class Todo extends Component<RootStore, any> {
   };
 
   render() {
-    const { days } = this.props.todoStore;
+    const { todoStore } = this.props;
+    const { currentDay } = todoStore;
     console.log(this.props.todoStore.currentDay);
     return (
       <div className={styles.Todo}>
         <div className={styles.Todo_Tabs}>
-          {this.props.todoStore.days?.map((day) => (
+          {todoStore.days?.map((day) => (
             <Tab
               key={day.id}
               day={day}
-              selectDay={this.props.todoStore.setSelectedDay}
+              selectDay={todoStore.setSelectedDay}
+              selectedDay={todoStore.selectedDay}
+              editDay={todoStore.setIsEditDay}
+              isEdited={todoStore.isEditDay}
             />
           ))}
-          <div className={styles.Todo_Tabs_Plus}>+</div>
-        </div>
-        <div className={styles.Todo_Container}>
-          <form
-            onSubmit={this.submitForm}
-            className={styles.Todo_Container_Form}
+          <div
+            onClick={() => todoStore.setIsAddNewDay(!todoStore.isAddNewDay)}
+            className={styles.Todo_Tabs_Plus}
           >
-            <div className={styles.Todo_Container_Form_Input}>
-              <label htmlFor="task">Введите задачу на этот день</label>
-              <input type="text" id={"task"} name={"task"} />
-            </div>
-            <div className={styles.Todo_Container_Form_Input}>
-              <label htmlFor="content">Введите описание задачи</label>
-              <input type="text" id={"content"} name={"content"} />
-            </div>
-            <button type={"submit"}>Добавить</button>
-          </form>
-          <div className={styles.Todo_Container_Task}>
-            <DragDropContext onDragEnd={this.handleOnDragEnd}>
-              <Droppable droppableId={"tasks"}>
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {this.props.todoStore.currentDay?.tasks.map(
-                      (task, index) => (
+            {todoStore.isAddNewDay ? "X" : "+"}
+          </div>
+        </div>
+
+        {todoStore.isAddNewDay && (
+          <div className={styles.Todo_Container}>
+            <form
+              onSubmit={this.submitFormDay}
+              className={styles.Todo_Container_Form}
+            >
+              <div className={styles.Todo_Container_Form_Input}>
+                <label htmlFor="name">Напишите название дня</label>
+                <input type="text" id={"name"} name={"name"} />
+              </div>
+              <div className={styles.Todo_Container_Form_Input}>
+                <label htmlFor="description">Введите описание дня</label>
+                <input type="text" id={"description"} name={"description"} />
+              </div>
+              <button type={"submit"}>Добавить день</button>
+            </form>
+          </div>
+        )}
+
+        {todoStore.isEditDay && (
+          <div className={styles.Todo_Container}>
+            <form
+              onSubmit={this.editFormDay}
+              className={styles.Todo_Container_Form}
+            >
+              <div className={styles.Todo_Container_Form_Input}>
+                <label htmlFor="name">Напишите название дня</label>
+                <input
+                  type="text"
+                  id={"name"}
+                  name={"name"}
+                  value={currentDay?.name || ""}
+                  onChange={(e) => todoStore.changeDayByKey(e.target)}
+                />
+              </div>
+              <div className={styles.Todo_Container_Form_Input}>
+                <label htmlFor="description">Введите описание дня</label>
+                <input
+                  type="text"
+                  id={"description"}
+                  name={"description"}
+                  value={currentDay?.description || ""}
+                  onChange={(e) => todoStore.changeDayByKey(e.target)}
+                />
+              </div>
+              <button type={"submit"}>Изменить день</button>
+            </form>
+          </div>
+        )}
+
+        {!todoStore.isAddNewDay && !todoStore.isEditDay && (
+          <div className={styles.Todo_Container}>
+            <form
+              onSubmit={this.submitForm}
+              className={styles.Todo_Container_Form}
+            >
+              <div className={styles.Todo_Container_Form_Input}>
+                <label htmlFor="task">Введите задачу на этот день</label>
+                <input type="text" id={"task"} name={"task"} />
+              </div>
+              <div className={styles.Todo_Container_Form_Input}>
+                <label htmlFor="content">Введите описание задачи</label>
+                <input type="text" id={"content"} name={"content"} />
+              </div>
+              <button type={"submit"}>Добавить</button>
+            </form>
+            <div className={styles.Todo_Container_Task}>
+              <DragDropContext onDragEnd={this.handleOnDragEnd}>
+                <Droppable droppableId={"tasks"}>
+                  {(provided) => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                      {currentDay?.tasks.map((task, index) => (
                         <Day
                           key={task.name}
                           task={task}
                           index={index}
-                          removeTask={this.props.todoStore.removeTaskFromDay}
+                          removeTask={todoStore.removeTaskFromDay}
                         />
-                      )
-                    )}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
 }
 
-const Tab = ({ day, selectDay }) => {
+const Tab = ({ day, selectDay, selectedDay, editDay, isEdited }) => {
+  const isSelected = selectedDay === day.id;
   return (
-    <div className={styles.Todo_Tabs_Tab} onClick={() => selectDay(day.id)}>
-      {day.name}
+    <div
+      className={styles.Todo_Tabs_Tab}
+      onClick={isSelected ? () => editDay(!isEdited) : () => selectDay(day.id)}
+    >
+      {isSelected ? (isEdited ? "no edit" : "edit") : day.name}
     </div>
   );
 };

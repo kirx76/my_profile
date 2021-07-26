@@ -25,6 +25,11 @@ export default class TodoStore {
 
   @observable _days: TDay[];
   @observable _selectedDay: number = 1;
+  @observable isAddNewDay = false;
+  @observable isEditDay = false;
+
+  @action setIsAddNewDay = (value: boolean) => (this.isAddNewDay = value);
+  @action setIsEditDay = (value: boolean) => (this.isEditDay = value);
 
   @computed get selectedDay() {
     return toJS(this._selectedDay);
@@ -79,6 +84,26 @@ export default class TodoStore {
       (task) => task !== removedTask
     );
     this.updateCurrentDayTasks(toJS(newTasks));
+    this.updateDay();
+  };
+
+  @action addNewDay = (day: TDay) => {
+    console.log(day);
+    this.client.post("/day/", day).then((response) => {
+      this.getDays();
+    });
+  };
+
+  @action changeDayByKey = (data) => {
+    this.currentDay[data.id] = data.value;
+  };
+
+  @action updateCurrentDay = (day: TDay) => {
+    const idInArray = this.days.findIndex((days) => days === this.currentDay);
+    console.log(idInArray);
+    this._days[idInArray] = day;
+    this.setIsEditDay(false);
+    // this.currentDay = day;
     this.updateDay();
   };
 }
