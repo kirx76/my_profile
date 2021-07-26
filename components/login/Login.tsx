@@ -16,7 +16,7 @@ class Login extends Component<RootStore, any> {
         redirectTo("/");
       })
       .catch((error) => {
-        console.log(error.response, "error.response");
+        // console.log(error.response, "error.response");
         this.props.notificationStore.createNotification(
           "error",
           error.response.data.message,

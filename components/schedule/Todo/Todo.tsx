@@ -3,7 +3,8 @@ import styles from "./Todo.module.scss";
 import RootStore from "stores/RootStore";
 import { inject, observer } from "mobx-react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { toJS } from "mobx";
+
+import { FaPencilAlt, FaTimesCircle } from "react-icons/fa";
 
 type TTask = {
   name: string;
@@ -76,16 +77,17 @@ class Todo extends Component<RootStore, any> {
     const newDay = {
       name: formData.get("name") as string,
       description: formData.get("description") as string,
-      tasks: [
-        {
-          name: formData.get("name") as string,
-          order: null,
-          content: formData.get("description") as string,
-        },
-      ],
+      tasks: this.props.todoStore?.currentDay?.tasks
+        ? this.props.todoStore.currentDay.tasks
+        : [
+            {
+              name: formData.get("name") as string,
+              order: null,
+              content: formData.get("description") as string,
+            },
+          ],
     };
     this.props.todoStore.updateCurrentDay(newDay);
-    // this.props.todoStore.addTaskToCurrentDay(newDay);
   };
 
   handleOnDragEnd = (result) => {
@@ -95,7 +97,6 @@ class Todo extends Component<RootStore, any> {
 
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    console.log(toJS(items));
     this.props.todoStore.updateCurrentDayTasks(items);
     this.props.todoStore.updateDay();
   };
@@ -103,7 +104,6 @@ class Todo extends Component<RootStore, any> {
   render() {
     const { todoStore } = this.props;
     const { currentDay } = todoStore;
-    console.log(this.props.todoStore.currentDay);
     return (
       <div className={styles.Todo}>
         <div className={styles.Todo_Tabs}>
@@ -171,6 +171,13 @@ class Todo extends Component<RootStore, any> {
                 />
               </div>
               <button type={"submit"}>Изменить день</button>
+              <button
+                style={{ marginTop: "16px" }}
+                type={"button"}
+                onClick={todoStore.deleteDay}
+              >
+                Удалить день
+              </button>
             </form>
           </div>
         )}
@@ -219,12 +226,24 @@ class Todo extends Component<RootStore, any> {
 
 const Tab = ({ day, selectDay, selectedDay, editDay, isEdited }) => {
   const isSelected = selectedDay === day.id;
+  const toggleEdit = (e, value) => {
+    e.stopPropagation();
+    editDay(value);
+  };
   return (
     <div
-      className={styles.Todo_Tabs_Tab}
-      onClick={isSelected ? () => editDay(!isEdited) : () => selectDay(day.id)}
+      className={isSelected ? styles.Todo_Tabs_TabActive : styles.Todo_Tabs_Tab}
+      onClick={() => selectDay(day.id)}
     >
-      {isSelected ? (isEdited ? "no edit" : "edit") : day.name}
+      {day.name}
+      <div>
+        {isSelected && !isEdited && (
+          <FaPencilAlt onClick={(e) => toggleEdit(e, true)} />
+        )}
+        {isSelected && isEdited && (
+          <FaTimesCircle onClick={(e) => toggleEdit(e, false)} />
+        )}
+      </div>
     </div>
   );
 };

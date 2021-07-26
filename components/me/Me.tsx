@@ -14,7 +14,7 @@ class Me extends Component<RootStore, any> {
   }
 
   render() {
-    console.log(this.props.authStore.user);
+    // console.log(this.props.authStore.user);
     return (
       <div className={styles.Me}>
         <span>Name: {this.props.authStore.user.name} </span>

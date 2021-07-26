@@ -6,6 +6,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @include beMobile() {
+    padding: 10px;
+  }
 
   &_Tabs {
     height: 32px;
@@ -13,12 +16,30 @@
     display: flex;
 
     &_Tab {
-      background-color: red;
+      background-color: $PeachAccent;
       cursor: pointer;
       overflow: hidden;
       margin-right: 2px;
       border-radius: 6px 6px 0 0;
       padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $Base;
+      @extend .Body2;
+      @include beMobile() {
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      div {
+        margin-left: 8px;
+      }
+    }
+
+    &_TabActive {
+      @extend .Todo_Tabs_Tab;
+      background-color: $Serulian;
     }
 
     &_Plus {

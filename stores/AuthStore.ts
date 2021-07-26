@@ -33,11 +33,11 @@ export default class AuthStore {
   }
 
   @action login = (userName: string, password: string) => {
-    console.log("LOGIN");
+    // console.log("LOGIN");
     return this.client
       .post("/user/login", JSON.stringify({ userName, password }))
       .then((response) => {
-        console.log(response, ["respon"]);
+        // console.log(response, ["respon"]);
         this.handleAuth(response);
         return this.getUser().then((userData) => {
           this.setUser(userData);

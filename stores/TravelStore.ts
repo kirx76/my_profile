@@ -29,7 +29,7 @@ export default class TravelStore {
 
   @action addPlaceMark = (placeMark: TPlaceMark) => {
     this.client.post("/travel", placeMark).then((response) => {
-      console.log(response);
+      // console.log(response);
       this.getPlaceMarks();
     });
   };

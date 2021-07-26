@@ -36,8 +36,9 @@ export default class TodoStore {
   }
 
   @action setSelectedDay = (day: number) => {
-    console.log(day);
+    // console.log(day);
     this._selectedDay = day;
+    this.setIsEditDay(false);
   };
 
   @computed get currentDay() {
@@ -88,7 +89,7 @@ export default class TodoStore {
   };
 
   @action addNewDay = (day: TDay) => {
-    console.log(day);
+    // console.log(day);
     this.client.post("/day/", day).then((response) => {
       this.getDays();
     });
@@ -100,10 +101,20 @@ export default class TodoStore {
 
   @action updateCurrentDay = (day: TDay) => {
     const idInArray = this.days.findIndex((days) => days === this.currentDay);
-    console.log(idInArray);
-    this._days[idInArray] = day;
+    // console.log(idInArray);
+    // console.log(toJS(this._days[idInArray]));
+    this._days[idInArray] = { ...this._days[idInArray], ...day };
+    // console.log(toJS(this._days[idInArray]));
     this.setIsEditDay(false);
     // this.currentDay = day;
     this.updateDay();
+  };
+
+  @action deleteDay = () => {
+    this.client.delete(`/day/${this.selectedDay}/`).then((response) => {
+      this.setSelectedDay(this.days[0].id);
+      this.setIsEditDay(false);
+      this.getDays();
+    });
   };
 }

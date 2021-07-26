@@ -16,7 +16,7 @@ class RootStore {
   todoStore?: TodoStore;
 
   constructor(initialData = null) {
-    console.log(initialData, ["initialData"]);
+    // console.log(initialData, ["initialData"]);
     this.menuStore = new MenuStore();
     this.tokenStore = new TokenStore(initialData?.tokenStore);
     this.$axios = initAxios(this.tokenStore);
